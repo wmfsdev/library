@@ -39,28 +39,19 @@ form.addEventListener('submit', (e) => {
 })
 
 
-// if (myLibrary.length = 1) {
-//     console.log(myLibrary[myLibrary.length - 1].title)
-//     console.log(myLibrary[myLibrary.length - 1].author)   
-//     console.log(myLibrary[myLibrary.length - 1].pages)
-//     console.log(myLibrary[myLibrary.length - 1].published)
-//     console.log(myLibrary.length)
-// } else {
-    
-// }
-
 function loopBook() {
     resetDisplay()
     displayTitle(myLibrary[myLibrary.length - 1].title)
     displayAuthor(myLibrary[myLibrary.length - 1].author)   
     displayPages(myLibrary[myLibrary.length - 1].pages)
     displayPublished(myLibrary[myLibrary.length - 1].published)
-    console.log(myLibrary.length)
-    //bookShelf(myLibrary[myLibrary.length - 1].title)
-    }
+    // -----------
+    bookShelfTitle(myLibrary[myLibrary.length - 2].title)
+    bookShelfAuthor(myLibrary[myLibrary.length - 2].author)
+    bookShelfPages(myLibrary[myLibrary.length - 2].pages)
+    bookShelfPublished(myLibrary[myLibrary.length - 2].published)
+}
                            
- //     if (i = myLibrary.length - 1) {       // need to find the right value for this still 
-
 function resetDisplay() {
     let book = document.querySelector('.book');
     while (book.firstChild) {
@@ -73,18 +64,42 @@ function resetDisplay() {
 //     div
 // }
 
-function bookShelf() {
-   
+
+// ------ BOOK SHELF -------
+
+function bookShelfTitle(title) {
     let shelf = document.querySelector('.shelf')
     let displayBook = document.createElement('div')
     let bookInfo = document.createElement('p')
-    
     displayBook.classList.add('display-style')
-    bookInfo.textContent = myLibrary[myLibrary.length - 2].title
+    bookInfo.textContent = title    // myLibrary[myLibrary.length - 2].title (alternative approach)
     shelf.appendChild(displayBook)
     displayBook.appendChild(bookInfo)
 }
 
+function bookShelfAuthor(author) {
+    let shelf = document.querySelector('.shelf').lastChild
+    let bookInfo = document.createElement('p')
+    bookInfo.textContent = author    // myLibrary[myLibrary.length - 2].author (alternative approach)
+    shelf.appendChild(bookInfo)
+}
+
+function bookShelfPages(pages) {
+     let shelf = document.querySelector('.shelf').lastChild   //('.display-style').
+     let bookInfo = document.createElement('p')
+     bookInfo.textContent = pages    // myLibrary[myLibrary.length - 2].pages (alternative approach)
+     shelf.appendChild(bookInfo)
+}
+
+ function bookShelfPublished(published) {
+     let shelf = document.querySelector('.shelf').lastChild   //('.display-style').
+     let bookInfo = document.createElement('p')
+     bookInfo.textContent = published    // myLibrary[myLibrary.length - 2].published (alternative approach)
+     shelf.appendChild(bookInfo)
+}
+
+
+// ------ MAIN BOOK -------
 
 function displayTitle(title) {
     let book = document.querySelector('.book');
@@ -92,10 +107,9 @@ function displayTitle(title) {
     createTitle.classList.add('book-style')
     createTitle.textContent = title
     book.appendChild(createTitle)
-    
-    if (myLibrary.length > 1) {
-        bookShelf()
-    } 
+    // if (myLibrary.length > 1) {
+    //     bookShelf()
+    // } 
 }
 
 function displayAuthor(author) {
@@ -104,7 +118,6 @@ function displayAuthor(author) {
     createAuthor.classList.add('book-style')
     createAuthor.textContent = author
     book.appendChild(createAuthor)
-
     // if (myLibrary.length > 1) {
     //     bookShelf()
     // } 
@@ -131,37 +144,3 @@ function displayPublished(published) {
     //     bookShelf()
     // } 
 }
-
-
-
-
-//             console.log(myLibrary[i].title)
-//             console.log(myLibrary[i].author)
-//             console.log(myLibrary[i].pages)
-//             console.log(myLibrary[i].published)
-// function displayBook() {
-//     let book = document.querySelector('book');
-//     let content = document.createElement('p');
-//     content.textContent = Object.entries(myLibrary[i])
-//     book.appendChild(content)
-// }
-
-//loopBook()
-
-
-// function getData(form) {
-//     let formData = new FormData(form);
-  
-//     // iterate through entries...
-//     for (let pair of formData.entries()) {
-//         console.log(Object.fromEntries(formData));
-//     }
-  
-//     // ...or output as an object
-//     //console.log(Object.fromEntries(formData));
-//   }
-  
-//   document.getElementById("form").addEventListener("submit", function (e) {
-//     e.preventDefault();
-//     getData(e.target);
-//   });

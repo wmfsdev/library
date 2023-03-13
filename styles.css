@@ -23,6 +23,8 @@ body {
 
 form {
     grid-column: 2;
+    place-self: center;
+    
     
 }
 
@@ -55,5 +57,7 @@ form {
 }
 
 .display-style {
+    width: 200px;
+    background-color: rgb(164, 176, 186);
     
 }

@@ -1,5 +1,4 @@
 
-
 // const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'not read')
 // const wonderBoys = new Book('Wonder Boys', 'Michael Chabon', '250', 'read')
 
@@ -11,8 +10,6 @@
 //     this.pages = pages
 //     this.published = published
 // }
-
-
 
 // const form = document.getElementById('form').elements.value;
 // const title = form.elements['title'];
@@ -35,37 +32,34 @@ form.addEventListener('submit', (e) => {
    //for (const pair of formData.entries()) {
    myLibrary.push(Object.fromEntries(formData));
    //console.log(Object.fromEntries(formData));
+   console.log(myLibrary)
    loopBook()
   // console.log(myLibrary)
  // }
 })
 
 
-function loopBook() {
-   
-    for (let i = 0 ; i < myLibrary.length ; i++) {
-        switch (i) {
-            case 0: displayTitle(myLibrary[i].title)
-                    displayAuthor(myLibrary[i].author)
-                    displayPages(myLibrary[i].pages)
-                    displayPublished(myLibrary[i].published)
-                    break;
-            case 1: resetDisplay()
-                    displayTitle(myLibrary[i].title)
-                    displayAuthor(myLibrary[i].author)
-                    displayPages(myLibrary[i].pages)
-                    displayPublished(myLibrary[i].published)
-                    break;
-            case 3: console.log(myLibrary[i].title)
-                    console.log(myLibrary[i].author)   
-                    console.log(myLibrary.length)
-                    console.log(myLibrary[i].title)
-                    console.log(myLibrary[0].title) 
-        }
- //     if (i = myLibrary.length - 1) {       // need to find the right value for this still 
-    }
-}
+// if (myLibrary.length = 1) {
+//     console.log(myLibrary[myLibrary.length - 1].title)
+//     console.log(myLibrary[myLibrary.length - 1].author)   
+//     console.log(myLibrary[myLibrary.length - 1].pages)
+//     console.log(myLibrary[myLibrary.length - 1].published)
+//     console.log(myLibrary.length)
+// } else {
+    
+// }
 
+function loopBook() {
+    resetDisplay()
+    displayTitle(myLibrary[myLibrary.length - 1].title)
+    displayAuthor(myLibrary[myLibrary.length - 1].author)   
+    displayPages(myLibrary[myLibrary.length - 1].pages)
+    displayPublished(myLibrary[myLibrary.length - 1].published)
+    console.log(myLibrary.length)
+    //bookShelf(myLibrary[myLibrary.length - 1].title)
+    }
+                           
+ //     if (i = myLibrary.length - 1) {       // need to find the right value for this still 
 
 function resetDisplay() {
     let book = document.querySelector('.book');
@@ -74,12 +68,34 @@ function resetDisplay() {
     }
 }
 
+
+// function displayForm() {
+//     div
+// }
+
+function bookShelf() {
+   
+    let shelf = document.querySelector('.shelf')
+    let displayBook = document.createElement('div')
+    let bookInfo = document.createElement('p')
+    
+    displayBook.classList.add('display-style')
+    bookInfo.textContent = myLibrary[myLibrary.length - 2].title
+    shelf.appendChild(displayBook)
+    displayBook.appendChild(bookInfo)
+}
+
+
 function displayTitle(title) {
     let book = document.querySelector('.book');
     let createTitle = document.createElement('p');
     createTitle.classList.add('book-style')
     createTitle.textContent = title
     book.appendChild(createTitle)
+    
+    if (myLibrary.length > 1) {
+        bookShelf()
+    } 
 }
 
 function displayAuthor(author) {
@@ -88,6 +104,10 @@ function displayAuthor(author) {
     createAuthor.classList.add('book-style')
     createAuthor.textContent = author
     book.appendChild(createAuthor)
+
+    // if (myLibrary.length > 1) {
+    //     bookShelf()
+    // } 
 }
 
 function displayPages(pages) {
@@ -96,6 +116,9 @@ function displayPages(pages) {
     createPages.classList.add('book-style')
     createPages.textContent = pages + " pages"
     book.appendChild(createPages)
+    // if (myLibrary.length > 1) {
+    //     bookShelf()
+    // } 
 }
 
 function displayPublished(published) {
@@ -104,6 +127,9 @@ function displayPublished(published) {
     createPublished.classList.add('book-style')
     createPublished.textContent = published
     book.appendChild(createPublished)
+    // if (myLibrary.length > 1) {
+    //     bookShelf()
+    // } 
 }
 
 

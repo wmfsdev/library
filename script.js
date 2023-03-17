@@ -26,110 +26,48 @@
 let myLibrary = []
 
 
-const form = document.querySelector('form')
-const formData = new FormData(form)
-
 form.addEventListener('submit', (e) => {
     e.preventDefault()
-    
-    myLibrary.push(Object.fromEntries(formData));
-    console.log(Object.fromEntries(formData));
-    console.log(myLibrary)
-    loopBook()
-   //queryButton()
+    const form = document.querySelector('form')
+    const formData = new FormData(form)
+   // myLibrary.push(Object.fromEntries(formData));
+   // console.log(Object.fromEntries(formData));
+    addBook(formData)
+    displayBook()
+
 })
+      
+    function Book(title, author, pages, published, read) {
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.published = published
+        this.read = read
+        console.log(title)
 
+        // function
+    }
 
-
-
-function ReadStatus() {
+    function addBook(formData) {
+    let book = new Book(
+        formData.get('title'), 
+        formData.get('author'),
+        formData.get('pages'),
+        formData.get('published'),
+        formData.get('read')
+        )
+        myLibrary.push(Object.fromEntries(formData));
+        console.log(book)
+        console.log(myLibrary)
+    }
     
-}
 
-ReadStatus.prototype.toggleReadStatus = function() {
-    console.log("yes")
-    //title.Object.fromEntries(formData)
-    // if such and such change read to not read
-}
-
-FormData.prototype = Object.create(ReadStatus.prototype)
-// FormData now has access to the toggleReadStatus function
+    Book.prototype.toggleRead = function() {
+       console.log("yes")
+    }
 
 
-
-
-// ----- PLEASE IGNORE, RANDOM TESTING ------
-
-// button.toggleReadStatus()
-// const test = new FormData(Object.fromEntries(formData).title)
-// test.toggleReadStatus()
-
-// let test = document.querySelector('.read-toggle')
-//     test.addEventListener('click', button.queryButton())  
-
-// const button = new FormData(read)
-
-
-//button.queryButton()
-
-// const button = document.querySelector('button')
-
-//    const test = new FormData('button')
-    
-//     test.bookRead()
-
-// function queryButton() {
-//     let button = document.querySelector('.read-toggle')
-//     button.addEventListener('click', test)   
-// }
-
-// use .lastChild somehow?
-
-// function test() {
-//     console.log("test")
-//     //changeReadStatus()
-//     let readStatus = document.querySelector('.book')
-//     let creatething = document.createElement('p')
-//     creatething.textContent = "read" // previous string was "not yet" so this is the "toggle function"
-//     readStatus.appendChild(creatething)
-// }
-
-// readStatus() {
-   
-//     myLibrary[0].read = "read" // again toggle between read and not read
-// // I guess uses an eventListener and some if statements to determine what the value of 
-// // myLibrary is and have it change accordingly on each button 'click'
-// }
-
-
-//  let book = document.querySelector('.book');
-//     let createTitle = document.createElement('p');
-//     let emptyTitle = document.createElement('p');
-//     createTitle.classList.add('book-style')
-//     emptyTitle.textContent = "READ: "
-//     createTitle.textContent = read
-//     book.appendChild(emptyTitle)
-//     book.appendChild(createTitle)
-
-// 
-// test.bookRead()
-
-
-// FormData.prototype.bookRead = function() {
-//      console.log()
-    // button.addEventListener('click', (e) => {
-    //e.preventDefault()
-    
-    //console.log(myLibrary)
-   // }) 
-
-
-// FormData.prototype = Object.create(Read.prototype)
-
-// let readbook = new FormData()
-
-
-function loopBook() {
+function displayBook() {
     resetDisplay()
     displayTitle(myLibrary[myLibrary.length - 1].title)
     displayAuthor(myLibrary[myLibrary.length - 1].author)   
@@ -137,13 +75,14 @@ function loopBook() {
     displayPublished(myLibrary[myLibrary.length - 1].published)
     displayReadStatus(myLibrary[myLibrary.length - 1].read)
     //
-    displayRead()
+    displayReadButton()
     // -----------
     if (myLibrary.length > 1) {
     bookShelfTitle(myLibrary[myLibrary.length - 2].title)
     bookShelfAuthor(myLibrary[myLibrary.length - 2].author)
     bookShelfPages(myLibrary[myLibrary.length - 2].pages)
     bookShelfPublished(myLibrary[myLibrary.length - 2].published)
+    bookShelfButton()
     } else return
 }
                            
@@ -154,20 +93,39 @@ function resetDisplay() {
     }
 }
 
+// button to remove book from array and UI
 
 
-// function displayForm() {
-//     pending
-// }
+function bookShelfButton() {
+    let shelf = document.querySelector('.shelf').lastChild
+    let bookButton = document.createElement('button')
+    bookButton.textContent = "hey"
+    shelf.appendChild(bookButton)
+    bookButton.classList.add('read-button')
+    // add data attribute
+    bookButton.dataset.bookIndex = `${myLibrary.length - 2}`;
+    // could possibly separate into new function
+    let readButtons = document.querySelector(`[data-book-index="${myLibrary.length - 2}"]`);
+        readButtons.addEventListener('click', (e) => {
+            myLibrary.splice(e.target.dataset.bookIndex, 1)
+            console.log(myLibrary)
+        });
+}
+  
+
 
 // ------ MAIN BOOK -------
 
-function displayRead() {
+function displayReadButton() {
     let shelf = document.querySelector('.book')
     let readButton = document.createElement('button')
-    readButton.classList.add('read-toggle')
+    readButton.classList.add('read-status')
     readButton.textContent = "Read?"
     shelf.appendChild(readButton)
+    readButton.addEventListener('click', (e) => {
+        const readStatus = new Book()
+        readStatus.toggleRead()
+    })
 }
 
 function displayReadStatus(read) {
@@ -179,9 +137,6 @@ function displayReadStatus(read) {
     createTitle.textContent = read
     book.appendChild(emptyTitle)
     book.appendChild(createTitle)
-    // if (myLibrary.length > 1) {
-    //     bookShelf()
-    // } 
 }
 
 function displayTitle(title) {
@@ -193,9 +148,6 @@ function displayTitle(title) {
     createTitle.textContent = title
     book.appendChild(emptyTitle)
     book.appendChild(createTitle)
-    // if (myLibrary.length > 1) {
-    //     bookShelf()
-    // } 
 }
 
 function displayAuthor(author) {
@@ -206,10 +158,7 @@ function displayAuthor(author) {
     book.appendChild(emptyAuthor)
     createAuthor.classList.add('book-style')
     createAuthor.textContent = author
-    book.appendChild(createAuthor)
-    // if (myLibrary.length > 1) {
-    //     bookShelf()
-    // } 
+    book.appendChild(createAuthor) 
 }
 
 function displayPages(pages) {
@@ -221,9 +170,7 @@ function displayPages(pages) {
     createPages.classList.add('book-style')
     createPages.textContent = pages
     book.appendChild(createPages)
-    // if (myLibrary.length > 1) {
-    //     bookShelf()
-    // } 
+    
 }
 
 function displayPublished(published) {
@@ -235,9 +182,6 @@ function displayPublished(published) {
     createPublished.classList.add('book-style')
     createPublished.textContent = published
     book.appendChild(createPublished)
-    // if (myLibrary.length > 1) {
-    //     bookShelf()
-    // } 
 }
 
 
@@ -247,13 +191,15 @@ function bookShelfTitle(title) {
     let shelf = document.querySelector('.shelf')
     let displayBook = document.createElement('div')
     let bookInfo = document.createElement('p')
-    let emptyTitle = document.createElement('p') ///
+    let emptyTitle = document.createElement('p') 
     displayBook.classList.add('display-style')
     bookInfo.textContent = title    // myLibrary[myLibrary.length - 2].title (alternative approach)
-    emptyTitle.textContent = "TITLE:" ///
+    emptyTitle.textContent = "TITLE:" 
     shelf.appendChild(displayBook)
     displayBook.append(emptyTitle)
     displayBook.appendChild(bookInfo)
+    let element = document.querySelector('.shelf').lastChild
+    element.dataset.bookIndex = `${myLibrary.length - 2}`;
 }
 
 function bookShelfAuthor(author) {

@@ -25,6 +25,9 @@
 
 let myLibrary = []
 
+//  []
+
+let bookCounter = 0;
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
@@ -34,7 +37,6 @@ form.addEventListener('submit', (e) => {
    // console.log(Object.fromEntries(formData));
     addBook(formData)
     displayBook()
-
 })
       
     function Book(title, author, pages, published, read) {
@@ -43,9 +45,6 @@ form.addEventListener('submit', (e) => {
         this.pages = pages
         this.published = published
         this.read = read
-        console.log(title)
-
-        // function
     }
 
     function addBook(formData) {
@@ -61,11 +60,9 @@ form.addEventListener('submit', (e) => {
         console.log(myLibrary)
     }
     
-
     Book.prototype.toggleRead = function() {
        console.log("yes")
     }
-
 
 function displayBook() {
     resetDisplay()
@@ -83,6 +80,7 @@ function displayBook() {
     bookShelfPages(myLibrary[myLibrary.length - 2].pages)
     bookShelfPublished(myLibrary[myLibrary.length - 2].published)
     bookShelfButton()
+    bookCounter++
     } else return
 }
                            
@@ -93,8 +91,6 @@ function resetDisplay() {
     }
 }
 
-// button to remove book from array and UI
-
 
 function bookShelfButton() {
     let shelf = document.querySelector('.shelf').lastChild
@@ -102,17 +98,34 @@ function bookShelfButton() {
     bookButton.textContent = "hey"
     shelf.appendChild(bookButton)
     bookButton.classList.add('read-button')
-    // add data attribute
-    bookButton.dataset.bookIndex = `${myLibrary.length - 2}`;
-    // could possibly separate into new function
-    let readButtons = document.querySelector(`[data-book-index="${myLibrary.length - 2}"]`);
-        readButtons.addEventListener('click', (e) => {
-            myLibrary.splice(e.target.dataset.bookIndex, 1)
-            console.log(myLibrary)
-        });
+    bookButton.dataset.bookIndex = `${bookCounter}`; // -2
+    removeBookArray()
 }
-  
 
+function removeBookArray() {
+    let readButtons = document.querySelector(`[data-book-index="${bookCounter}"]`); // -2
+    readButtons.addEventListener('click', (e) => {
+        myLibrary.splice(e.target.dataset.bookIndex, 1)
+        console.log(myLibrary)
+        removeBookDisplay(e.target.dataset.bookIndex)  //
+    });
+}
+
+function removeBookDisplay(eTarget) {
+    let removeBook = document.querySelector(`[data-book-index="${eTarget}"]`)
+    let element = removeBook.closest(`.display-style`)
+    element.remove()
+    bookCounter-- 
+    resetDataAtt()
+}
+
+function resetDataAtt() {
+    let resetButtonAttr = document.querySelectorAll('.read-button')
+    resetButtonAttr.forEach((button, index) => {
+        button.dataset.bookIndex = index
+    })
+}
+   
 
 // ------ MAIN BOOK -------
 
@@ -187,6 +200,8 @@ function displayPublished(published) {
 
 // ------ BOOK SHELF -------
 
+
+
 function bookShelfTitle(title) {
     let shelf = document.querySelector('.shelf')
     let displayBook = document.createElement('div')
@@ -198,8 +213,9 @@ function bookShelfTitle(title) {
     shelf.appendChild(displayBook)
     displayBook.append(emptyTitle)
     displayBook.appendChild(bookInfo)
-    let element = document.querySelector('.shelf').lastChild
-    element.dataset.bookIndex = `${myLibrary.length - 2}`;
+    // let element = document.querySelector('.shelf').lastChild
+    // element.dataset.bookStyle = `${bookCounter}`;   ////// was -2
+    // ++bookCounter
 }
 
 function bookShelfAuthor(author) {

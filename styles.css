@@ -29,10 +29,14 @@ form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    font-size: 1.5rem;
 }
 
 input[type="text"] {
     width: 100%;
+    height: 30px;
+    font-size: 1.3rem;
+    padding-left: 3px;
 }
 
 input[type="radio"] {

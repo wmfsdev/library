@@ -97,3 +97,7 @@ fieldset {
 .read-button {
     background-color: antiquewhite;
 }
+
+.read-toggle {
+    background-color: azure;
+}

@@ -24,9 +24,6 @@
 
 
 let myLibrary = []
-
-//  []
-
 let bookCounter = 0;
 
 form.addEventListener('submit', (e) => {
@@ -60,9 +57,9 @@ form.addEventListener('submit', (e) => {
         console.log(myLibrary)
     }
     
-    Book.prototype.toggleRead = function() {
-       console.log("yes")
-    }
+   
+
+// ----- SUBMIT BUTTON ------- 
 
 function displayBook() {
     resetDisplay()
@@ -83,7 +80,8 @@ function displayBook() {
     bookCounter++
     } else return
 }
-                           
+    
+
 function resetDisplay() {
     let book = document.querySelector('.book');
     while (book.firstChild) {
@@ -94,20 +92,55 @@ function resetDisplay() {
 
 function bookShelfButton() {
     let shelf = document.querySelector('.shelf').lastChild
-    let bookButton = document.createElement('button')
-    bookButton.textContent = "hey"
-    shelf.appendChild(bookButton)
-    bookButton.classList.add('read-button')
-    bookButton.dataset.bookIndex = `${bookCounter}`; // -2
+    let bookRemoveButton = document.createElement('button')
+    let bookToggleRead = document.createElement('button')
+    bookRemoveButton.textContent = "Remove"
+    bookToggleRead.textContent = "Read?"
+    shelf.appendChild(bookRemoveButton)
+    shelf.appendChild(bookToggleRead)
+    bookRemoveButton.classList.add('read-button')
+    bookToggleRead.classList.add('read-toggle')
+    bookRemoveButton.dataset.bookIndex = `${bookCounter}`;
+    bookToggleRead.dataset.bookToggle = `${bookCounter}`;
     removeBookArray()
+    toggleBook()
 }
 
+
+
+function toggleBook() {
+    let toggleButtons = document.querySelector(`[data-book-toggle="${bookCounter}"]`)
+    toggleButtons.addEventListener('click', (e) => {
+        const readStatus = new Book()
+        readStatus.toggleRead(e.target.dataset.bookToggle)
+    })
+}
+
+Book.prototype.toggleRead = function(bookToggle) {
+    //let toggleStatus = document.querySelectorAll('[data-book-toggle]')
+    console.log(myLibrary[bookToggle].read)
+    if (myLibrary[bookToggle].read === "Not yet") {
+        myLibrary[bookToggle].read = "Yes"
+    } else {
+        myLibrary[bookToggle].read = "Not yet"
+    }
+    console.log(myLibrary[bookToggle].read)
+}
+
+function resetToggleAtt() {
+    let resetToggleAtt = document.querySelectorAll('[data-book-toggle]')
+        resetToggleAtt.forEach((attribute, index) => {
+        attribute.dataset.bookToggle = index
+        console.log()
+    })
+ }
+
 function removeBookArray() {
-    let readButtons = document.querySelector(`[data-book-index="${bookCounter}"]`); // -2
+    let readButtons = document.querySelector(`[data-book-index="${bookCounter}"]`); 
     readButtons.addEventListener('click', (e) => {
         myLibrary.splice(e.target.dataset.bookIndex, 1)
         console.log(myLibrary)
-        removeBookDisplay(e.target.dataset.bookIndex)  //
+        removeBookDisplay(e.target.dataset.bookIndex)
     });
 }
 
@@ -117,6 +150,7 @@ function removeBookDisplay(eTarget) {
     element.remove()
     bookCounter-- 
     resetDataAtt()
+    resetToggleAtt()
 }
 
 function resetDataAtt() {

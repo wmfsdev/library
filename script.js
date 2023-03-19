@@ -1,37 +1,12 @@
 
-// const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', '295', 'not read')
-// const wonderBoys = new Book('Wonder Boys', 'Michael Chabon', '250', 'read')
-
-// let myLibrary = [theHobbit, wonderBoys];
-
-// function Book(parameters) {
-//     this.title = title
-//     this.author = author
-//     this.pages = pages
-//     this.published = published
-// }
-
-// const form = document.getElementById('form').elements.value;
-// const title = form.elements['title'];
-// const author = form.elements['author'];
-// const pages = form.elements['pages'];
-// const published = form.elements['published'];
-
-// let fullName = title.value;
-// let fullAuthor = author.value;
-// let fullPages = pages.value;
-// let fullPublish = published.value;
-
-
 let myLibrary = []
 let bookCounter = 0;
+
 
 form.addEventListener('submit', (e) => {
     e.preventDefault()
     const form = document.querySelector('form')
     const formData = new FormData(form)
-   // myLibrary.push(Object.fromEntries(formData));
-   // console.log(Object.fromEntries(formData));
     addBook(formData)
     displayBook()
 })
@@ -57,7 +32,6 @@ form.addEventListener('submit', (e) => {
         console.log(myLibrary)
     }
     
-   
 
 // ----- SUBMIT BUTTON ------- 
 
@@ -68,19 +42,48 @@ function displayBook() {
     displayPages(myLibrary[myLibrary.length - 1].pages)
     displayPublished(myLibrary[myLibrary.length - 1].published)
     displayReadStatus(myLibrary[myLibrary.length - 1].read)
-    //
-  //  displayReadButton()
-    // -----------
+    // ------
     if (myLibrary.length > 1) {
     bookShelfTitle(myLibrary[myLibrary.length - 2].title)
     bookShelfAuthor(myLibrary[myLibrary.length - 2].author)
     bookShelfPages(myLibrary[myLibrary.length - 2].pages)
     bookShelfPublished(myLibrary[myLibrary.length - 2].published)
-    bookShelfButton()
+    bookShelfButton(myLibrary[myLibrary.length - 2].read)
     bookCounter++
     } else return
 }
+
+
+// ------ FOR REVIEW ---------
     
+
+function toggleBook() {
+    let toggleButtons = document.querySelector(`[data-book-toggle="${bookCounter}"]`)
+    toggleButtons.addEventListener('click', (e) => {
+        console.log(e.target.dataset.bookToggle)
+        let readStatus = new Book()
+        readStatus.toggleRead(e.target.dataset.bookToggle) //e.target.dataset.bookToggle
+    })
+}
+
+Book.prototype.toggleRead = function(bookToggle) {
+   // console.log(myLibrary[bookToggle].read)
+    if (myLibrary[bookToggle].read === "Not yet") {
+        myLibrary[bookToggle].read = "Yes"
+    } else {
+        myLibrary[bookToggle].read = "Not yet"
+    }
+   // console.log(myLibrary[bookToggle].read)
+    let toggleButton = document.querySelector(`[data-book-toggle="${bookToggle}"`)
+    if (myLibrary[bookToggle].read === "Yes") {
+        toggleButton.textContent = "Yes"
+    } else {
+        toggleButton.textContent = "Not yet"
+    } 
+}
+
+
+// ---- RESETS -----
 
 function resetDisplay() {
     let book = document.querySelector('.book');
@@ -89,52 +92,22 @@ function resetDisplay() {
     }
 }
 
-
-function bookShelfButton() {
-    let shelf = document.querySelector('.shelf').lastChild
-    let bookRemoveButton = document.createElement('button')
-    let bookToggleRead = document.createElement('button')
-    bookRemoveButton.textContent = "Remove"
-    bookToggleRead.textContent = "Read?"
-    shelf.appendChild(bookRemoveButton)
-    shelf.appendChild(bookToggleRead)
-    bookRemoveButton.classList.add('read-button')
-    bookToggleRead.classList.add('read-toggle')
-    bookRemoveButton.dataset.bookIndex = `${bookCounter}`;
-    bookToggleRead.dataset.bookToggle = `${bookCounter}`;
-    removeBookArray()
-    toggleBook()
-}
-
-
-
-function toggleBook() {
-    let toggleButtons = document.querySelector(`[data-book-toggle="${bookCounter}"]`)
-    toggleButtons.addEventListener('click', (e) => {
-        const readStatus = new Book()
-        readStatus.toggleRead(e.target.dataset.bookToggle)
-    })
-}
-
-Book.prototype.toggleRead = function(bookToggle) {
-   
-    //let toggleStatus = document.querySelectorAll('[data-book-toggle]')
-    console.log(myLibrary[bookToggle].read)
-    if (myLibrary[bookToggle].read === "Not yet") {
-        myLibrary[bookToggle].read = "Yes"
-    } else {
-        myLibrary[bookToggle].read = "Not yet"
-    }
-    console.log(myLibrary[bookToggle].title)
-}
-
 function resetToggleAtt() {
     let resetToggleAtt = document.querySelectorAll('[data-book-toggle]')
         resetToggleAtt.forEach((attribute, index) => {
         attribute.dataset.bookToggle = index
         console.log()
     })
- }
+}
+
+function resetDataAtt() {
+    let resetButtonAttr = document.querySelectorAll('.read-button')
+    resetButtonAttr.forEach((button, index) => {
+        button.dataset.bookIndex = index
+    })
+}
+
+// ---- REMOVE -----
 
 function removeBookArray() {
     let readButtons = document.querySelector(`[data-book-index="${bookCounter}"]`); 
@@ -153,28 +126,9 @@ function removeBookDisplay(eTarget) {
     resetDataAtt()
     resetToggleAtt()
 }
-
-function resetDataAtt() {
-    let resetButtonAttr = document.querySelectorAll('.read-button')
-    resetButtonAttr.forEach((button, index) => {
-        button.dataset.bookIndex = index
-    })
-}
    
 
 // ------ MAIN BOOK -------
-
-// function displayReadButton() {
-//     let shelf = document.querySelector('.book')
-//     let readButton = document.createElement('button')
-//     readButton.classList.add('read-status')
-//     readButton.textContent = "Read?"
-//     shelf.appendChild(readButton)
-//     readButton.addEventListener('click', (e) => {
-//         const readStatus = new Book()
-//         readStatus.toggleRead()
-//     })
-// }
 
 function displayReadStatus(read) {
     let book = document.querySelector('.book');
@@ -218,7 +172,6 @@ function displayPages(pages) {
     createPages.classList.add('book-style')
     createPages.textContent = pages
     book.appendChild(createPages)
-    
 }
 
 function displayPublished(published) {
@@ -235,28 +188,23 @@ function displayPublished(published) {
 
 // ------ BOOK SHELF -------
 
-
-
 function bookShelfTitle(title) {
     let shelf = document.querySelector('.shelf')
     let displayBook = document.createElement('div')
     let bookInfo = document.createElement('p')
     let emptyTitle = document.createElement('p') 
     displayBook.classList.add('display-style')
-    bookInfo.textContent = title    // myLibrary[myLibrary.length - 2].title (alternative approach)
+    bookInfo.textContent = title 
     emptyTitle.textContent = "TITLE:" 
     shelf.appendChild(displayBook)
     displayBook.append(emptyTitle)
     displayBook.appendChild(bookInfo)
-    // let element = document.querySelector('.shelf').lastChild
-    // element.dataset.bookStyle = `${bookCounter}`;   ////// was -2
-    // ++bookCounter
 }
 
 function bookShelfAuthor(author) {
     let shelf = document.querySelector('.shelf').lastChild
     let bookInfo = document.createElement('p')
-    bookInfo.textContent = author    // myLibrary[myLibrary.length - 2].author (alternative approach)
+    bookInfo.textContent = author  
     let emptyTitle = document.createElement('p') 
     emptyTitle.textContent = "AUTHOR:" 
     shelf.append(emptyTitle) 
@@ -264,9 +212,9 @@ function bookShelfAuthor(author) {
 }
 
 function bookShelfPages(pages) {
-    let shelf = document.querySelector('.shelf').lastChild   //('.display-style').
+    let shelf = document.querySelector('.shelf').lastChild   
     let bookInfo = document.createElement('p')
-    bookInfo.textContent = pages    // myLibrary[myLibrary.length - 2].pages (alternative approach)
+    bookInfo.textContent = pages  
     let emptyTitle = document.createElement('p') 
     emptyTitle.textContent = "PAGES:" 
     shelf.append(emptyTitle) 
@@ -274,13 +222,27 @@ function bookShelfPages(pages) {
 }
 
  function bookShelfPublished(published) {
-    let shelf = document.querySelector('.shelf').lastChild   //('.display-style').
+    let shelf = document.querySelector('.shelf').lastChild   
     let bookInfo = document.createElement('p')
-    bookInfo.textContent = published    // myLibrary[myLibrary.length - 2].published (alternative approach)
+    bookInfo.textContent = published  
     let emptyTitle = document.createElement('p') 
     emptyTitle.textContent = "PUBLISHED:" 
     shelf.append(emptyTitle) 
     shelf.appendChild(bookInfo)
 }
 
-
+function bookShelfButton(readStatus) {
+    let shelf = document.querySelector('.shelf').lastChild
+    let bookRemoveButton = document.createElement('button')
+    let bookToggleRead = document.createElement('button')
+    bookRemoveButton.textContent = "Remove"
+    bookToggleRead.textContent = readStatus
+    shelf.appendChild(bookToggleRead)
+    shelf.appendChild(bookRemoveButton)
+    bookToggleRead.classList.add('read-toggle')
+    bookRemoveButton.classList.add('read-button')
+    bookToggleRead.dataset.bookToggle = `${bookCounter}`;
+    bookRemoveButton.dataset.bookIndex = `${bookCounter}`;
+    removeBookArray()
+    toggleBook()
+}

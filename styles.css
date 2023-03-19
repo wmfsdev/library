@@ -13,7 +13,7 @@ body {
     padding: 10px;
     height: 100vh;
     display: grid;
-    grid-template-rows: 1fr 300px;
+    grid-template-rows: 1fr 350px;
 
 }
 .main-display {
@@ -113,19 +113,32 @@ fieldset p {
 
 .display-style {
     width: 200px;
-    background-color: rgb(164, 176, 186);
+    background-color: rgb(187, 205, 220);
     border-radius: 3px;
-    padding: 15px;
+    padding: 10px;
     font-size: 1rem;
     display: grid;   
 }
 
-.read-button {
-    background-color: antiquewhite;
+.display-style > p:nth-child(odd) {
+    font-size: .9rem;
 }
 
+/* .display-style > p:nth-child(even) {
+    font-weight: bold;
+} */
+
+.read-button,
 .read-toggle {
-    background-color: azure;
+    background-color: antiquewhite;
+    font-family: 'Oswald', sans-serif;
+    height: 30px;
+    box-shadow: 0 0 4px rgba(135, 135, 135, 0.3);
+}
+
+.read-button:hover ,
+.read-toggle:hover {
+    scale: 1.01
 }
 
 button {

@@ -69,7 +69,7 @@ function displayBook() {
     displayPublished(myLibrary[myLibrary.length - 1].published)
     displayReadStatus(myLibrary[myLibrary.length - 1].read)
     //
-    displayReadButton()
+  //  displayReadButton()
     // -----------
     if (myLibrary.length > 1) {
     bookShelfTitle(myLibrary[myLibrary.length - 2].title)
@@ -117,6 +117,7 @@ function toggleBook() {
 }
 
 Book.prototype.toggleRead = function(bookToggle) {
+   
     //let toggleStatus = document.querySelectorAll('[data-book-toggle]')
     console.log(myLibrary[bookToggle].read)
     if (myLibrary[bookToggle].read === "Not yet") {
@@ -124,7 +125,7 @@ Book.prototype.toggleRead = function(bookToggle) {
     } else {
         myLibrary[bookToggle].read = "Not yet"
     }
-    console.log(myLibrary[bookToggle].read)
+    console.log(myLibrary[bookToggle].title)
 }
 
 function resetToggleAtt() {
@@ -163,17 +164,17 @@ function resetDataAtt() {
 
 // ------ MAIN BOOK -------
 
-function displayReadButton() {
-    let shelf = document.querySelector('.book')
-    let readButton = document.createElement('button')
-    readButton.classList.add('read-status')
-    readButton.textContent = "Read?"
-    shelf.appendChild(readButton)
-    readButton.addEventListener('click', (e) => {
-        const readStatus = new Book()
-        readStatus.toggleRead()
-    })
-}
+// function displayReadButton() {
+//     let shelf = document.querySelector('.book')
+//     let readButton = document.createElement('button')
+//     readButton.classList.add('read-status')
+//     readButton.textContent = "Read?"
+//     shelf.appendChild(readButton)
+//     readButton.addEventListener('click', (e) => {
+//         const readStatus = new Book()
+//         readStatus.toggleRead()
+//     })
+// }
 
 function displayReadStatus(read) {
     let book = document.querySelector('.book');

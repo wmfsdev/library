@@ -9,18 +9,23 @@
 
 body {
     font-family: 'Oswald', sans-serif;
-    background-color: rgb(210, 204, 196);
+    background-color: rgb(237, 234, 228);
     padding: 10px;
     height: 100vh;
     display: grid;
-    grid-template-rows: 1fr 350px;
+    grid-template-rows: 20px 1fr 350px;
 
 }
 .main-display {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 2;
+}
+
+.header {
+    font-size: 3rem;
+    padding-left: 10px;
 }
 
 form {
@@ -91,7 +96,6 @@ fieldset p {
 }
 
 .book-style {
-    
     font-size: 2rem;
     padding: 0px;
     display: grid;
@@ -99,8 +103,8 @@ fieldset p {
 }
 
 .shelf {
-    background-color: rgb(176, 187, 187);
-    grid-row: 2;
+    background-color: rgb(168, 194, 194);
+    grid-row: 3;
     padding:10px;
     display:flex;
     gap: 10px;
@@ -113,34 +117,73 @@ fieldset p {
 
 .display-style {
     width: 200px;
-    background-color: rgb(187, 205, 220);
+    background-color: rgb(156, 188, 214);
     border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(139, 168, 193, 0.526);
     padding: 10px;
     font-size: 1rem;
     display: grid;   
+    position: relative;
 }
 
 .display-style > p:nth-child(odd) {
-    font-size: .9rem;
+    font-size: .8rem;
 }
 
-/* .display-style > p:nth-child(even) {
-    font-weight: bold;
-} */
+.display-style > p:nth-child(even) {
+    font-size: 1.15rem;
+    grid-template-rows: 1fr 1fr;
+    display: grid;
+}
 
-.read-button,
-.read-toggle {
+.read-toggle,
+.read-toggle-no {
+    background-color: rgb(160, 241, 163, 0.71);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    text-align: center;
+    height: 25px;
+    text-transform: uppercase;
+    box-shadow: 0 0 4px rgba(135, 135, 135, 0.3);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 140px;
+    margin: 8px;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+.read-toggle-no {
+    background-color: rgb(250, 235, 215); 
+}
+
+.read-button {
+    position: absolute;
+    border-radius: 5rem;
+    height: 30px;
+    width: 30px;
+    right: 0;
+    margin: 5px;
+    border-style: dashed;
+    border-width: 1.9px;
+    border-color: rgb(124, 158, 220, 0.8);
     background-color: antiquewhite;
     font-family: 'Oswald', sans-serif;
-    height: 30px;
-    box-shadow: 0 0 4px rgba(135, 135, 135, 0.3);
 }
 
-.read-button:hover ,
+.read-button:hover {
+    scale: 1.15;
+    font-size: 1rem;
+}
+
 .read-toggle:hover {
-    scale: 1.01
+    scale: 1.015;
+    font-size: 
 }
 
 button {
-    border-style: none;
+    border-style: none; 
 }

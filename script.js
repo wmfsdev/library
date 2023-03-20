@@ -1,4 +1,5 @@
 
+
 let myLibrary = []
 let bookCounter = 0;
 
@@ -11,15 +12,15 @@ form.addEventListener('submit', (e) => {
     displayBook()
 })
       
-    function Book(title, author, pages, published, read) {
+function Book(title, author, pages, published, read) {
         this.title = title
         this.author = author
         this.pages = pages
         this.published = published
         this.read = read
-    }
+}
 
-    function addBook(formData) {
+function addBook(formData) {
     let book = new Book(
         formData.get('title'), 
         formData.get('author'),
@@ -27,10 +28,10 @@ form.addEventListener('submit', (e) => {
         formData.get('published'),
         formData.get('read')
         )
-        myLibrary.push(Object.fromEntries(formData));
+        myLibrary.push(book);
         console.log(book)
         console.log(myLibrary)
-    }
+}
     
 
 // ----- SUBMIT BUTTON ------- 
@@ -48,6 +49,7 @@ function displayBook() {
     bookShelfAuthor(myLibrary[myLibrary.length - 2].author)
     bookShelfPages(myLibrary[myLibrary.length - 2].pages)
     bookShelfPublished(myLibrary[myLibrary.length - 2].published)
+    bookShelfRead()
     bookShelfButton(myLibrary[myLibrary.length - 2].read)
     bookCounter++
     } else return
@@ -56,29 +58,22 @@ function displayBook() {
 
 // ------ FOR REVIEW ---------
     
-
 function toggleBook() {
     let toggleButtons = document.querySelector(`[data-book-toggle="${bookCounter}"]`)
     toggleButtons.addEventListener('click', (e) => {
-        console.log(e.target.dataset.bookToggle)
-        let readStatus = new Book()
-        readStatus.toggleRead(e.target.dataset.bookToggle) //e.target.dataset.bookToggle
+    // console.log(e.target.dataset.bookToggle)
+    myLibrary[e.target.dataset.bookToggle].toggleRead(e.target.dataset.bookToggle)
     })
 }
 
 Book.prototype.toggleRead = function(bookToggle) {
-   // console.log(myLibrary[bookToggle].read)
-    if (myLibrary[bookToggle].read === "Not yet") {
-        myLibrary[bookToggle].read = "Yes"
-    } else {
-        myLibrary[bookToggle].read = "Not yet"
-    }
-   // console.log(myLibrary[bookToggle].read)
+    this.read = (this.read === "Yes") ? "Not Yet" : "Yes";
     let toggleButton = document.querySelector(`[data-book-toggle="${bookToggle}"`)
-    if (myLibrary[bookToggle].read === "Yes") {
-        toggleButton.textContent = "Yes"
+    toggleButton.textContent = (this.read === "Yes") ? "Yes" : "Not yet";
+    if (this.read === "Yes") {
+        toggleButton.style.backgroundColor = 'rgba(160, 241, 163, 0.71)';
     } else {
-        toggleButton.textContent = "Not yet"
+        toggleButton.style.backgroundColor = 'antiquewhite';
     } 
 }
 
@@ -96,14 +91,14 @@ function resetToggleAtt() {
     let resetToggleAtt = document.querySelectorAll('[data-book-toggle]')
         resetToggleAtt.forEach((attribute, index) => {
         attribute.dataset.bookToggle = index
-        console.log()
+      //  console.log()
     })
 }
 
 function resetDataAtt() {
     let resetButtonAttr = document.querySelectorAll('.read-button')
     resetButtonAttr.forEach((button, index) => {
-        button.dataset.bookIndex = index
+    button.dataset.bookIndex = index
     })
 }
 
@@ -112,9 +107,9 @@ function resetDataAtt() {
 function removeBookArray() {
     let readButtons = document.querySelector(`[data-book-index="${bookCounter}"]`); 
     readButtons.addEventListener('click', (e) => {
-        myLibrary.splice(e.target.dataset.bookIndex, 1)
-        console.log(myLibrary)
-        removeBookDisplay(e.target.dataset.bookIndex)
+    myLibrary.splice(e.target.dataset.bookIndex, 1)
+    // console.log(myLibrary)
+    removeBookDisplay(e.target.dataset.bookIndex)
     });
 }
 
@@ -221,7 +216,7 @@ function bookShelfPages(pages) {
     shelf.appendChild(bookInfo)
 }
 
- function bookShelfPublished(published) {
+function bookShelfPublished(published) {
     let shelf = document.querySelector('.shelf').lastChild   
     let bookInfo = document.createElement('p')
     bookInfo.textContent = published  
@@ -231,15 +226,26 @@ function bookShelfPages(pages) {
     shelf.appendChild(bookInfo)
 }
 
+function bookShelfRead() {
+    let shelf = document.querySelector('.shelf').lastChild   
+    let emptyTitle = document.createElement('p') 
+    emptyTitle.textContent = "READ:" 
+    shelf.append(emptyTitle) 
+}
+
 function bookShelfButton(readStatus) {
     let shelf = document.querySelector('.shelf').lastChild
     let bookRemoveButton = document.createElement('button')
     let bookToggleRead = document.createElement('button')
-    bookRemoveButton.textContent = "Remove"
+    bookRemoveButton.textContent = "X"
     bookToggleRead.textContent = readStatus
     shelf.appendChild(bookToggleRead)
     shelf.appendChild(bookRemoveButton)
-    bookToggleRead.classList.add('read-toggle')
+    if (readStatus == "Yes") {
+        bookToggleRead.classList.add('read-toggle')
+    } else {
+        bookToggleRead.classList.add('read-toggle-no')
+    }
     bookRemoveButton.classList.add('read-button')
     bookToggleRead.dataset.bookToggle = `${bookCounter}`;
     bookRemoveButton.dataset.bookIndex = `${bookCounter}`;

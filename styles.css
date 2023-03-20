@@ -86,6 +86,7 @@ fieldset p {
     width: 400px;
     border-radius: 3px;
     background-color: rgb(124, 158, 220);
+    box-shadow: 7px 9px 4px rgba(188, 195, 197, 0.606);
     padding:15px;
     grid-row: 1;
     place-self: center;

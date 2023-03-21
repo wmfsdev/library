@@ -74,4 +74,4 @@ function toggleRead() {
 But I wasn't satisfied with this solution as 1) it didn't fulfill the brief and 2) I wanted to see a functioning example of prototypal inheritance in one of my own projects.
 ___
 
-credit due to *@toby = { ...snowmonkey, uke };* on TOP Discord for code review - very helpful guidance on the matter.
+acknowledgements: *@toby = { ...snowmonkey, uke };* on TOP Discord for code review - very helpful guidance on the matter.

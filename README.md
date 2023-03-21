@@ -35,7 +35,7 @@ function Book(title, author, pages, published, read) {
 }
 ```
 
-The data I thought was being passed into myLibrary array was coming from the wrong object:
+The data I thought was being passed into **myLibrary** array was coming from the wrong object:
 
 ```js
 const formData = new FormData(form)

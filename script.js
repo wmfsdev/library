@@ -12,12 +12,29 @@ form.addEventListener('submit', (e) => {
     displayBook()
 })
       
-function Book(title, author, pages, published, read) {
+// Class
+
+class Book {
+
+    constructor(title, author, pages, published, read) {
         this.title = title
         this.author = author
         this.pages = pages
         this.published = published
         this.read = read
+    }
+
+    toggleRead(bookToggle) {
+        this.read = (this.read === "Yes") ? "Not Yet" : "Yes";
+        let toggleButton = document.querySelector(`[data-book-toggle="${bookToggle}"`)
+        toggleButton.textContent = (this.read === "Yes") ? "Yes" : "Not yet";
+        if (this.read === "Yes") {
+            toggleButton.style.backgroundColor = 'rgba(160, 241, 163, 0.71)';
+        } else {
+            toggleButton.style.backgroundColor = 'antiquewhite';
+        } 
+    }
+    
 }
 
 function addBook(formData) {
@@ -61,21 +78,20 @@ function displayBook() {
 function toggleBook() {
     let toggleButtons = document.querySelector(`[data-book-toggle="${bookCounter}"]`)
     toggleButtons.addEventListener('click', (e) => {
-    // console.log(e.target.dataset.bookToggle)
     myLibrary[e.target.dataset.bookToggle].toggleRead(e.target.dataset.bookToggle)
     })
 }
 
-Book.prototype.toggleRead = function(bookToggle) {
-    this.read = (this.read === "Yes") ? "Not Yet" : "Yes";
-    let toggleButton = document.querySelector(`[data-book-toggle="${bookToggle}"`)
-    toggleButton.textContent = (this.read === "Yes") ? "Yes" : "Not yet";
-    if (this.read === "Yes") {
-        toggleButton.style.backgroundColor = 'rgba(160, 241, 163, 0.71)';
-    } else {
-        toggleButton.style.backgroundColor = 'antiquewhite';
-    } 
-}
+// Book.prototype.toggleRead = function(bookToggle) {
+//     this.read = (this.read === "Yes") ? "Not Yet" : "Yes";
+//     let toggleButton = document.querySelector(`[data-book-toggle="${bookToggle}"`)
+//     toggleButton.textContent = (this.read === "Yes") ? "Yes" : "Not yet";
+//     if (this.read === "Yes") {
+//         toggleButton.style.backgroundColor = 'rgba(160, 241, 163, 0.71)';
+//     } else {
+//         toggleButton.style.backgroundColor = 'antiquewhite';
+//     } 
+// }
 
 
 // ---- RESETS -----

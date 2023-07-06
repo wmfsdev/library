@@ -23,7 +23,7 @@ class Book {
         this.published = published
         this.read = read
     }
-
+    
     toggleRead(bookToggle) {
         this.read = (this.read === "Yes") ? "Not Yet" : "Yes";
         let toggleButton = document.querySelector(`[data-book-toggle="${bookToggle}"`)
@@ -33,8 +33,7 @@ class Book {
         } else {
             toggleButton.style.backgroundColor = 'antiquewhite';
         } 
-    }
-    
+    }  
 }
 
 function addBook(formData) {

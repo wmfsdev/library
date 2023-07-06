@@ -1,4 +1,4 @@
-#Library
+# Library
 
 + live: https://wmfsdev.github.io/library/
 ___
@@ -7,7 +7,7 @@ ___
 The primary aim of this project was to demonstrate an understanding of *Object constructors*, the *prototype* and *prototypal inheritance*. This would involve creating a Book object every time the user submitted book details into a form and then implementing a toggle function (a 'toggle' type button that indicates whether the user has read the book or not) on the Book object's prototype. The properties of this toggle function can then be shared across all Book instances. This is an efficient method for when there are thousands of instances generated as it helps to reduce memory usage.
 ____
 
-##Misconceptions
+## Misconceptions
 
 Originally my code was written as follows:
 
